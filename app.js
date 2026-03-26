@@ -124,4 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.peeking-mascot, .mascot-wrapper, .delivery-mascot').forEach(m => speechObserver.observe(m));
 
+    // 6. Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
 });
