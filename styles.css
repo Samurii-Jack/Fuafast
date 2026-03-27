@@ -189,22 +189,22 @@ img { max-width: 100%; display: block; }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
   align-items: center;
 }
 
 .hero-content {
-  margin-top: -30px; 
+  margin-top: -10px; 
   position: relative;
   z-index: 5;
 }
 
 .hero-logo { 
-  width: 130%; 
-  max-width: none; 
-  margin-left: -24%; /* Aggressively pull left so the geometric edge of 'f' aligns perfectly with 'T' */
-  margin-bottom: -200px; /* Aggressively reduce vertical spacing to compact the headline directly under the logo */
+  width: 100%; 
+  max-width: 540px; 
+  margin-left: 0;
+  margin-bottom: 0.5rem; 
   filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4)); 
   transition: var(--transition); 
 }
@@ -223,9 +223,9 @@ img { max-width: 100%; display: block; }
 
 .hero-headline {
   font-family: var(--font-head);
-  font-size: clamp(3rem, 7vw, 5rem);
+  font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: 0.85;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1.2rem;
   letter-spacing: -3px;
   background: linear-gradient(to bottom, #fff, #c2ffe1);
   -webkit-background-clip: text;
@@ -285,7 +285,24 @@ img { max-width: 100%; display: block; }
 
 @media (max-width: 968px) {
   .hero-grid { grid-template-columns: 1fr; text-align: center; }
-  .hero-content { display: flex; flex-direction: column; align-items: center; }
+  .hero-content { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: -60px; /* Shifted whole block upwards */
+  }
+  .hero-logo {
+    width: 90%;
+    max-width: 320px;
+    margin-left: 0;
+    margin-bottom: 2rem; 
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  }
+  .hero-tag {
+    margin-top: 10px;
+    position: relative;
+    z-index: 6;
+  }
   .hero-cta-wrap { justify-content: center; }
   .hero-visual { order: -1; }
 }
@@ -348,7 +365,19 @@ img { max-width: 100%; display: block; }
 }
 
 .services-grid.detailed {
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .services-grid.detailed {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .services-grid.detailed {
+    grid-template-columns: 1fr;
+  }
 }
 
 .service-card, .plan-card {
