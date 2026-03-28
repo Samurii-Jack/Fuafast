@@ -76,31 +76,51 @@ document.addEventListener('DOMContentLoaded', () => {
         window.requestAnimationFrame(step);
     };
 
-    // 4. Sticky CTA Visibility Logic
-    // In index.html, we use the nav-cta or hero-cta. 
-    // Let's create a logic where a sticky button appears after hero.
-    const createStickyCTA = () => {
-        const sticky = document.createElement('a');
-        sticky.id = 'sticky-cta';
-        sticky.href = "https://wa.me/254700000000";
-        sticky.innerHTML = `
-            <div class="hero-cta-btn" style="padding: 12px 24px; font-size: 0.9rem; pointer-events: auto;">
-                Book via WhatsApp
-            </div>
-        `;
-        document.body.appendChild(sticky);
-
-        const heroSection = document.getElementById('hero');
+    // 4. Sticky CTA Visibility Logic & WhatsApp Dynamic Routing
+    const stickyContainer = document.getElementById('sticky-cta');
+    const heroSection = document.getElementById('hero');
+    
+    if (stickyContainer && heroSection) {
         window.addEventListener('scroll', () => {
             const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
             if (window.scrollY > heroBottom - 200) {
-                sticky.classList.add('visible');
+                stickyContainer.classList.add('visible');
             } else {
-                sticky.classList.remove('visible');
+                stickyContainer.classList.remove('visible');
             }
         });
-    };
-    createStickyCTA();
+    }
+
+    // Handle WhatsApp clicks globally
+    const waPhone = "254700000000";
+    document.querySelectorAll('[data-wa-msg]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Prevent default if it's an anchor without a true href
+            if (btn.tagName === 'A' && (!btn.href || btn.href.includes('#'))) {
+                e.preventDefault();
+            }
+            const msg = encodeURIComponent(btn.getAttribute('data-wa-msg'));
+            const url = `https://wa.me/${waPhone}?text=${msg}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        });
+    });
+
+    // 7. Image Lazy Loading
+    const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.onload = () => img.classList.add('fade-in');
+                    img.removeAttribute('data-src');
+                }
+                observer.unobserve(img);
+            }
+        });
+    }, { rootMargin: '0px 0px 200px 0px' });
+
+    document.querySelectorAll('img.lazy-img').forEach(img => lazyImageObserver.observe(img));
 
     // 5. Speech Bubble Staggered Entry
     // Make speech bubbles pop slightly after the mascot is seen

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Deployment Trigger: v1.0.9 -->
+  <!-- Deployment Trigger: v1.1.0 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   
@@ -38,6 +38,7 @@
       href="https://wa.me/254700000000?text=Habari!%20Nataka%20kufua%20nguo%20zangu.%20Niambie%20zaidi!"
       class="cta-btn"
       id="sticky-whatsapp-btn"
+      data-wa-msg="Book Now"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Book via WhatsApp"
@@ -77,6 +78,7 @@
         target="_blank"
         rel="noopener noreferrer"
         id="nav-whatsapp-btn"
+        data-wa-msg="Habari! Nataka kufua nguo zangu."
       >
         Book Now
       </a>
@@ -104,7 +106,7 @@
           You do other things.
         </p>
         <div class="hero-cta-wrap">
-          <a href="https://wa.me/254700000000" class="hero-cta-btn" id="hero-whatsapp-btn">Book via WhatsApp</a>
+          <a href="https://wa.me/254700000000" class="hero-cta-btn" id="hero-whatsapp-btn" data-wa-msg="Habari! Nataka kufua nguo zangu.">Book via WhatsApp</a>
           <a href="tel:+254700000000" class="hero-call-btn" id="hero-call-btn">Call Us Directly</a>
         </div>
       </div>
@@ -134,67 +136,67 @@
         <div class="section-header">
           <p class="section-label animate-in">💧 Service Menu</p>
           <h2 class="section-title animate-in">What We Do Best</h2>
-          <p class="section-sub animate-in">Pilot prices. Quality you'll feel.</p>
+          <p class="section-sub animate-in">Base Wash-Dry-Fold at KSh 115/kg (6kg min). Express at KSh 165/kg. Quality you'll feel.</p>
         </div>
         
         <div class="services-container">
           <div class="services-grid detailed">
             <article class="service-card image-card animate-in">
               <div class="service-img-wrapper">
-                <img src="assets/service_wash_dry_kenya_1774516280411.png" alt="Self Service Laundry" />
+                <img data-src="assets/service_wash_dry_kenya_1774516280411.png" alt="Self Service Laundry" class="lazy-img" />
               </div>
               <div class="service-content">
-                <p class="service-name">WASH & DRY</p>
+                <p class="service-name wordmark">WASH & DRY</p>
                 <p class="service-desc">Use modern, high-capacity washers and dryers for a quick and smooth laundry process.</p>
               </div>
             </article>
 
             <article class="service-card image-card animate-in">
               <div class="service-img-wrapper">
-                <img src="assets/service_delivery_kenya_1774516300421.png" alt="Pick & Drop Service" />
+                <img data-src="assets/service_delivery_kenya_1774516300421.png" alt="Pick & Drop Service" class="lazy-img" />
               </div>
               <div class="service-content">
-                <p class="service-name">PICK & DROP SERVICE</p>
+                <p class="service-name wordmark">PICK & DROP SERVICE</p>
                 <p class="service-desc">Convenient doorstep laundry pickup and delivery for clean, fresh clothes without effort.</p>
               </div>
             </article>
 
             <article class="service-card image-card animate-in">
               <div class="service-img-wrapper">
-                <img src="assets/service_express_kenya_1774516316328.png" alt="Laundry Express" />
+                <img data-src="assets/service_express_kenya_1774516316328.png" alt="Laundry Express" class="lazy-img" />
               </div>
               <div class="service-content">
-                <p class="service-name">LAUNDRY EXPRESS</p>
+                <p class="service-name wordmark">LAUNDRY EXPRESS</p>
                 <p class="service-desc">Fast and efficient wash-and-dry service for busy schedules and quick needs.</p>
               </div>
             </article>
 
             <article class="service-card image-card animate-in">
               <div class="service-img-wrapper">
-                <img src="assets/service_ironing_kenya_1774516336118.png" alt="Ironing Service" />
+                <img data-src="assets/service_ironing_kenya_1774516336118.png" alt="Ironing Service" class="lazy-img" />
               </div>
               <div class="service-content">
-                <p class="service-name">IRONING SERVICE</p>
+                <p class="service-name wordmark">IRONING SERVICE</p>
                 <p class="service-desc">Get crisp, wrinkle-free clothes with professional ironing for a polished appearance.</p>
               </div>
             </article>
 
             <article class="service-card image-card animate-in">
               <div class="service-img-wrapper">
-                <img src="assets/service_drycleaning_kenya_1774516356347.png" alt="Dry Cleaning" />
+                <img data-src="assets/service_drycleaning_kenya_1774516356347.png" alt="Dry Cleaning" class="lazy-img" />
               </div>
               <div class="service-content">
-                <p class="service-name">DRY CLEANING</p>
+                <p class="service-name wordmark">DRY CLEANING</p>
                 <p class="service-desc">Specialized cleaning for delicate fabrics, suits, duvet, and premium garments with expert care.</p>
               </div>
             </article>
 
             <article class="service-card image-card animate-in">
               <div class="service-img-wrapper">
-                <img src="assets/service_sneakers_kenya.png" alt="Sneaker Cleaning Service" />
+                <img data-src="assets/service_sneakers_kenya.png" alt="Sneaker Cleaning Service" class="lazy-img" />
               </div>
               <div class="service-content">
-                <p class="service-name">SNEAKER CLEANING</p>
+                <p class="service-name wordmark">SNEAKER CLEANING</p>
                 <p class="service-desc">Professional deep cleaning and restoration for your favorite pairs. We handle all materials with expert care.</p>
               </div>
             </article>
@@ -203,7 +205,7 @@
           <!-- Peeking Mascot Explainer -->
           <div class="peeking-mascot services-mascot animate-in">
             <div class="speech-bubble side-bubble">Only KSh 115? That's a steal for fresh clothes! 🧼</div>
-            <img src="assets/mascot.png" alt="Skoon peeking" />
+            <img data-src="assets/mascot.png" alt="Skoon peeking" class="lazy-img" />
           </div>
         </div>
       </div>
@@ -233,6 +235,7 @@
               <li><span>✓</span> Free express upgrade (1x/quarter)</li>
               <li><span>✓</span> Guaranteed same-week pickup</li>
             </ul>
+            <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request the Solo Dweller plan." style="display:block; text-align:center; margin-top:2rem;">Select Plan</a>
           </article>
 
           <article class="plan-card featured animate-in">
@@ -249,6 +252,7 @@
               <li><span>✓</span> Guaranteed same-week pickup</li>
               <li><span>✓</span> Best value for couples</li>
             </ul>
+            <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request the Couple's Plan." style="display:block; text-align:center; margin-top:2rem;">Select Plan</a>
           </article>
 
           <article class="plan-card animate-in">
@@ -264,13 +268,14 @@
               <li><span>✓</span> Guaranteed same-week pickup</li>
               <li><span>✓</span> Perfect for families</li>
             </ul>
+            <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request the Family Bundle." style="display:block; text-align:center; margin-top:2rem;">Select Plan</a>
           </article>
         </div>
 
         <!-- Mascot showing savings -->
         <div class="peeking-mascot sub-mascot animate-in">
           <div class="speech-bubble up-bubble">Save up to 20% by subscribing! It's pure magic. 🎩</div>
-          <img src="assets/mascot.png" alt="Skoon giving tips" />
+          <img data-src="assets/mascot.png" alt="Skoon giving tips" class="lazy-img" />
         </div>
       </div>
 
@@ -341,13 +346,36 @@
             <li><span>✓</span> Eco-Friendly Cleaning – Gentle on fabrics, safe for the planet.</li>
             <li><span>✓</span> Expert Care – Fresh, clean, and neatly folded clothes every time.</li>
           </ul>
-          <a href="#" class="btn-hiw-teal">
+          <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to claim my 20% discount on my first laundry service!">
             % Claim Your Discount
           </a>
         </div>
         <div class="offer-image">
-          <img src="assets/isometric_folded_laundry_1774517503572.png" alt="Folded Laundry Isometric" />
+          <img data-src="assets/isometric_folded_laundry_1774517503572.png" alt="Folded Laundry Isometric" class="lazy-img" />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION 4C — SNEAKER LAB
+  ════════════════════════════════════════════ -->
+  <section id="sneaker-lab" class="section">
+    <div class="container sneaker-lab-grid">
+      <div class="sneaker-lab-content animate-in">
+        <p class="section-label">👟 The Lab</p>
+        <h2 class="sneaker-lab-title wordmark">Sneaker Cleaning</h2>
+        <p class="sneaker-lab-price">KSh 240 <span style="font-size:1rem; color:var(--text-dim); font-family:var(--font-body);">per pair</span></p>
+        <p class="section-sub" style="margin-bottom:2rem; color:var(--text-main);">
+          Deep clean & professional whitening to restore your favorite pairs. We handle all materials with expert care.
+        </p>
+        <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request a pickup for sneaker cleaning.">
+          Schedule a Pickup
+        </a>
+      </div>
+      <div class="sneaker-lab-visual animate-in">
+        <div class="speech-bubble up-bubble" style="position:absolute; top:-40px; right:0; z-index:20;">My orange high-tops stay fresh thanks to the Lab!</div>
+        <img data-src="assets/mascot.png" alt="Skoon Sneaker Lab" class="sneaker-lab-mascot lazy-img" />
       </div>
     </div>
   </section>

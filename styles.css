@@ -3,7 +3,7 @@
    Premium, Mascot-Led, Fully Responsive
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Outfit:wght@400;600;700;900&family=Nunito:wght@400;600;700&display=swap');
 
 :root {
   --blue:         #4163ff;
@@ -18,6 +18,7 @@
   --text-dim:     #a0aec0;
   --font-head:    'Outfit', sans-serif;
   --font-body:    'Nunito', sans-serif;
+  --font-wordmark:'Bricolage Grotesque', sans-serif;
   --radius-lg:    24px;
   --shadow-float: 0 20px 40px rgba(0,0,0,0.4);
   --transition:   0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -59,8 +60,86 @@ img { max-width: 100%; display: block; }
   padding: 0 2rem;
 }
 
+.wordmark {
+  font-family: var(--font-wordmark);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* Lazy Loading Transitions */
+.lazy-img {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.lazy-img.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.faq-item.active .faq-icon { transform: rotate(180deg); }
+
+
 /* ============================================================
-   NAVBAR
+   SNEAKER LAB (SECTION 4C)
+   ============================================================ */
+#sneaker-lab {
+  position: relative;
+  background: var(--bg-surface);
+  border-top: 2px solid var(--orange);
+  border-bottom: 2px solid var(--orange);
+  overflow: hidden;
+}
+
+.sneaker-lab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.sneaker-lab-content {
+  z-index: 5;
+}
+
+.sneaker-lab-title {
+  font-family: var(--font-head);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--orange);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.sneaker-lab-price {
+  font-family: var(--font-wordmark);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--mint);
+  margin-bottom: 1.5rem;
+}
+
+.sneaker-lab-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sneaker-lab-mascot {
+  max-width: 400px;
+  filter: drop-shadow(0 20px 40px rgba(255,107,53,0.3));
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 968px) {
+  .sneaker-lab-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   CTA SECTION & FOOTER
    ============================================================ */
 #navbar {
   position: fixed;
@@ -432,9 +511,9 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
-.service-card:hover, .plan-card:hover {
-  transform: translateY(-15px);
-  border-color: var(--blue);
+.service-card:hover, .plan-card:hover { 
+  transform: translateY(-5px); 
+  border-color: rgba(255,255,255,0.2); 
   box-shadow: 0 30px 60px rgba(65,99,255,0.2);
 }
 
@@ -444,7 +523,11 @@ img { max-width: 100%; display: block; }
 .service-price span { font-size: 1rem; color: var(--text-dim); font-weight: 500; }
 .service-note { margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-dim); }
 
-.plan-card.featured { border: 2px solid var(--blue); box-shadow: 0 20px 50px rgba(65,99,255,0.3); }
+.plan-card.featured {
+  background: linear-gradient(135deg, rgba(65,99,255,0.1) 0%, rgba(13,19,64,1) 100%);
+  border: 2px solid var(--blue);
+  box-shadow: 0 0 30px var(--blue-glow); /* Neon Blue Glow */
+}
 .plan-popular { position: absolute; top: 1.5rem; right: -2rem; background: var(--orange); padding: 5px 40px; transform: rotate(45deg); font-weight: 900; font-size: 0.8rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
 .plan-price { font-family: var(--font-head); font-size: 2.8rem; font-weight: 900; color: #fff; line-height: 1.1; margin: 1.5rem 0; }
