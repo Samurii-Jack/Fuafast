@@ -742,7 +742,7 @@ img { max-width: 100%; display: block; }
 
 /* FOOTER */
 .footer-bar { border-top: 1px solid var(--glass-border); padding-top: 3rem; text-align: center; }
-.footer-logo { height: 40px; margin: 0 auto 1.5rem; }
+.footer-logo { height: 75px; max-width: 100%; object-fit: contain; margin: 0 auto 1.5rem; }
 .footer-tagline { font-family: var(--font-head); font-weight: 900; color: var(--mint); letter-spacing: 2px; margin-bottom: 0.5rem; }
 .footer-copy { color: var(--text-dim); font-size: 0.9rem; }
 
