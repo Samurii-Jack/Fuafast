@@ -159,14 +159,12 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-logo { 
-  height: 180px; 
+  height: 90px; 
   width: auto; 
-  margin-top: 20px;
-  margin-bottom: -60px; /* Forces it to overflow bottom */
   position: relative;
   z-index: 1001;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
 }
 .nav-logo:hover { transform: scale(1.05); }
 
@@ -176,9 +174,7 @@ img { max-width: 100%; display: block; }
 }
 
 #navbar.scrolled .nav-logo {
-  height: 90px;
-  margin-top: 0;
-  margin-bottom: 0;
+  height: 60px;
 }
 .nav-links { display: flex; gap: 2.5rem; }
 .nav-links a { 
@@ -210,9 +206,7 @@ img { max-width: 100%; display: block; }
   }
   
   .nav-logo {
-    height: 140px;
-    margin-top: 45px;
-    margin-bottom: -100px;
+    height: 70px;
   }
 
   #navbar.scrolled {
@@ -220,9 +214,7 @@ img { max-width: 100%; display: block; }
   }
 
   #navbar.scrolled .nav-logo {
-    height: 80px;
-    margin-top: 10px;
-    margin-bottom: -15px;
+    height: 50px;
   }
 }
 
