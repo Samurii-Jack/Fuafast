@@ -57,19 +57,21 @@
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="container nav-inner">
       <div class="nav-brand">
-        <img
-          src="assets/fua fast 3D lettermark.png"
-          alt="FuaFast 3D Logo"
-          class="nav-logo"
-          onerror="this.src='assets/logo-wordmark.png'; this.nextElementSibling.style.display='block';"
-        />
-        <span style="display:none; font-family:'Outfit',sans-serif; font-weight:900; font-size:1.3rem;">
-          <span style="color:#ff6b35;">skoon</span><span style="color:#4163ff;">fast</span>
-        </span>
+        <a href="index.html">
+          <img
+            src="assets/fua fast 3D lettermark.png"
+            alt="FuaFast 3D Logo"
+            class="nav-logo"
+            onerror="this.src='assets/logo-wordmark.png'; this.nextElementSibling.style.display='block';"
+          />
+          <span style="display:none; font-family:'Outfit',sans-serif; font-weight:900; font-size:1.3rem;">
+            <span style="color:#ff6b35;">skoon</span><span style="color:#4163ff;">fast</span>
+          </span>
+        </a>
       </div>
       <div class="nav-links">
         <a href="#services">Services</a>
-        <a href="#subscriptions">Plans</a>
+        <a href="subscriptions.html">Plans</a>
         <a href="#how-it-works">How it Works</a>
       </div>
       <a
@@ -226,74 +228,28 @@
   </section>
 
   <!-- ════════════════════════════════════════════
-       SECTION 3 — SUBSCRIPTIONS
+       SECTION 3 — SUBSCRIPTIONS TEASER
   ════════════════════════════════════════════ -->
-  <section id="subscriptions" class="section">
+  <section id="subscriptions" class="section" style="background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%); text-align: center;">
     <div class="container">
       <p class="section-label animate-in">📅 Monthly Plans</p>
-      <h2 class="section-title animate-in">Subscribe & Save</h2>
-      <p class="section-sub animate-in">Recurring laundry, recurring peace of mind.</p>
-
-      <div class="plans-container">
-        <div class="plans-grid">
-          <article class="plan-card animate-in">
-            <p class="plan-name">Solo Dweller</p>
-            <p class="plan-kg">20 kg per month</p>
-            <p class="plan-price">KSh <span data-count="2070">2,070</span><br><span class="plan-period">per month</span></p>
-            <div class="plan-save-badge">Save 10%</div>
-            <hr class="plan-divider" />
-            <ul class="plan-perks">
-              <li><span>✓</span> Priority scheduling</li>
-              <li><span>✓</span> Rollover unused quota</li>
-              <li><span>✓</span> Free express upgrade (1x/quarter)</li>
-              <li><span>✓</span> Guaranteed same-week pickup</li>
-            </ul>
-            <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request the Solo Dweller plan." style="display:block; text-align:center; margin-top:2rem;">Select Plan</a>
-          </article>
-
-          <article class="plan-card featured animate-in">
-            <span class="plan-popular">MOST POPULAR</span>
-            <p class="plan-name">Couple's Plan</p>
-            <p class="plan-kg">40 kg per month</p>
-            <p class="plan-price">KSh <span data-count="3910">3,910</span><br><span class="plan-period">per month</span></p>
-            <div class="plan-save-badge">Save 15%</div>
-            <hr class="plan-divider" />
-            <ul class="plan-perks">
-              <li><span>✓</span> Priority scheduling</li>
-              <li><span>✓</span> Rollover unused quota</li>
-              <li><span>✓</span> Free express upgrade (1x/quarter)</li>
-              <li><span>✓</span> Guaranteed same-week pickup</li>
-              <li><span>✓</span> Best value for couples</li>
-            </ul>
-            <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request the Couple's Plan." style="display:block; text-align:center; margin-top:2rem;">Select Plan</a>
-          </article>
-
-          <article class="plan-card animate-in">
-            <p class="plan-name">Family Bundle</p>
-            <p class="plan-kg">60 kg per month</p>
-            <p class="plan-price">KSh <span data-count="5520">5,520</span><br><span class="plan-period">per month</span></p>
-            <div class="plan-save-badge">Save 20%</div>
-            <hr class="plan-divider" />
-            <ul class="plan-perks">
-              <li><span>✓</span> Priority scheduling</li>
-              <li><span>✓</span> Rollover unused quota</li>
-              <li><span>✓</span> Free express upgrade (1x/quarter)</li>
-              <li><span>✓</span> Guaranteed same-week pickup</li>
-              <li><span>✓</span> Perfect for families</li>
-            </ul>
-            <a href="#" class="btn-hiw-teal" data-wa-msg="I'd like to request the Family Bundle." style="display:block; text-align:center; margin-top:2rem;">Select Plan</a>
-          </article>
-        </div>
-
-        <!-- Mascot showing savings -->
-        <div class="peeking-mascot sub-mascot animate-in">
-          <div class="speech-bubble up-bubble">Save up to 20% by subscribing! It's pure magic. 🎩</div>
-          <img data-src="assets/mascot.png" alt="Skoon giving tips" class="lazy-img" />
-        </div>
+      <h2 class="section-title animate-in" style="font-size: clamp(2rem, 4vw, 3rem);">Never Think About Laundry Again</h2>
+      <p class="section-sub animate-in" style="margin: 0 auto 2rem;">Subscribe and save up to 20% while getting your weekends back. No commitment. Cancel anytime.</p>
+      
+      <div class="animate-in" style="margin-bottom: 3rem;">
+        <span style="background: rgba(194, 255, 225, 0.3); border: 1px solid #c2ffe1; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: bold; color: #0b4f36;">
+          ⭐ Trusted by 200+ Ngong Subscribers
+        </span>
       </div>
 
-      <div class="plans-footer animate-in">
-        🎉 Subscribe & Save up to 20% + Priority Scheduling!
+      <a href="subscriptions.html" class="btn-solid animate-in" style="font-size: 1.1rem; padding: 15px 40px; box-shadow: 0 10px 20px rgba(65,99,255,0.3);">
+        View Plans & Pricing
+      </a>
+      
+      <!-- Mascot showing savings -->
+      <div class="peeking-mascot sub-mascot animate-in">
+        <div class="speech-bubble up-bubble">Save up to 20% by subscribing! It's pure magic. 🎩</div>
+        <img data-src="assets/mascot.png" alt="Skoon giving tips" class="lazy-img" />
       </div>
     </div>
   </section>
