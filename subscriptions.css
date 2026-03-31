@@ -733,8 +733,12 @@ html {
 }
 
 @media (max-width: 768px) {
+  .premium-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
   .subscriptions-hero,
-  .problem-solution,
+  .premium-subscription-info,
   .subscription-benefits,
   .pricing-section,
   .how-it-works,
