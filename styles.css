@@ -785,7 +785,7 @@ img { max-width: 100%; display: block; }
 .hiw-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(10, 12, 30, 0.88) 0%, rgba(15, 23, 42, 0.75) 100%);
+  background: linear-gradient(135deg, rgba(10, 12, 30, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%);
   z-index: 1;
 }
 .hiw-intro {
@@ -833,10 +833,10 @@ img { max-width: 100%; display: block; }
 
 /* Glassmorphism cards */
 .hiw-glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 15, 30, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 2.5rem 2rem;
   color: #fff;
