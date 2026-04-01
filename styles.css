@@ -763,33 +763,135 @@ img { max-width: 100%; display: block; }
 }
 @media (max-width: 968px) { .how-it-works-grid { grid-template-columns: 1fr; } }
 
+/* Background image section */
+.hiw-section {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0;
+  min-height: 600px;
+}
+.hiw-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  transition: transform 30s linear;
+}
+.hiw-section:hover .hiw-bg-image {
+  transform: scale(1.05);
+}
+.hiw-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 12, 30, 0.88) 0%, rgba(15, 23, 42, 0.75) 100%);
+  z-index: 1;
+}
+.hiw-intro {
+  max-width: 480px;
+  margin-bottom: 3rem;
+}
+
 .hiw-badge {
   display: inline-block;
   padding: 6px 16px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50px;
   font-size: 0.85rem;
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.7);
   margin-bottom: 1rem;
 }
-
 .hiw-title {
   font-family: var(--font-head);
   font-size: 2.5rem;
   font-weight: 900;
+  color: #ffffff;
   line-height: 1.2;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
 }
-
 .hiw-desc {
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.7);
   font-size: 1.1rem;
   margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Carousel */
+.hiw-carousel-wrapper { position: relative; }
+.hiw-carousel { overflow: hidden; border-radius: 16px; }
+.hiw-carousel-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.hiw-slide {
+  min-width: 50%;
+  padding: 0 0.75rem;
+  box-sizing: border-box;
+}
+
+/* Glassmorphism cards */
+.hiw-glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hiw-glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+.hiw-glass-card .step-card-title {
+  font-family: var(--font-head);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+}
+.hiw-glass-card .step-card-desc {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Carousel Dots */
+.hiw-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.hiw-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.hiw-dot.active {
+  background: #14b8a6;
+  border-color: #14b8a6;
+  transform: scale(1.2);
+}
+.hiw-dot:hover { border-color: #14b8a6; }
+
+@media (max-width: 768px) {
+  .hiw-section { padding: 4rem 0; min-height: auto; }
+  .hiw-intro { max-width: 100%; }
+  .hiw-slide { min-width: 100%; }
 }
 
 .btn-hiw-teal {
-  background: #14b8a6; /* teal */
+  background: #14b8a6;
   color: #fff;
   padding: 15px 30px;
   border-radius: 8px;
@@ -820,7 +922,6 @@ img { max-width: 100%; display: block; }
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-
 .step-badge {
   background: #14b8a6;
   color: #fff;
@@ -831,7 +932,6 @@ img { max-width: 100%; display: block; }
   margin-bottom: 1rem;
   display: inline-block;
 }
-
 .step-card-title {
   font-family: var(--font-head);
   font-weight: 800;
@@ -839,7 +939,6 @@ img { max-width: 100%; display: block; }
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
-
 .step-card-desc {
   color: #64748b;
   font-size: 0.95rem;

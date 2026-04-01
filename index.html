@@ -161,7 +161,11 @@
                 <img data-src="assets/service_wash_dry_kenya_1774516280411.png" alt="Self Service Laundry" class="lazy-img" />
               </div>
               <div class="service-content">
+<<<<<<< HEAD
                 <p class="service-name wordmark">WASH, DRY & FOLD</p>
+=======
+                <p class="service-name wordmark">WASH, DRY & FOLD </p>
+>>>>>>> fe6af03 (UI: Add background image carousel with glassmorphism to How It Works section)
                 <p class="service-desc">Use modern, high-capacity washers and dryers for a quick and smooth laundry process.</p>
               </div>
             </article>
@@ -258,45 +262,71 @@
   <!-- ════════════════════════════════════════════
        SECTION 4 — HOW IT WORKS
   ════════════════════════════════════════════ -->
-  <section id="how-it-works" class="section bg-light-section">
-    <div class="container">
-      <div class="how-it-works-grid">
-        <div class="how-it-works-content animate-in">
-          <span class="hiw-badge">How it works</span>
-          <h2 class="hiw-title">HOW OUR PICK & DROP SERVICE WORKS</h2>
-          <p class="hiw-desc">
-            While we can customize your cleaning plan to suit your needs, most clients schedule regular cleaning services:
-          </p>
-          <a href="https://wa.me/254700000000" class="btn-hiw-teal" target="_blank" rel="noopener noreferrer">
-            <span class="hiw-icon">🛒</span> Schedule A pickup
-          </a>
+  <section id="how-it-works" class="section hiw-section">
+    <!-- Background Image -->
+    <div class="hiw-bg-image" style="background-image: url('assets/Fuafast Kenya Van.png');"></div>
+    <!-- Dark overlay for contrast -->
+    <div class="hiw-overlay"></div>
+
+    <div class="container" style="position: relative; z-index: 2;">
+      <!-- Left-aligned intro text -->
+      <div class="hiw-intro animate-in">
+        <span class="hiw-badge">How it works</span>
+        <h2 class="hiw-title">HOW OUR PICK &amp; DROP SERVICE WORKS</h2>
+        <p class="hiw-desc">
+          While we can customize your cleaning plan to suit your needs, most clients schedule regular cleaning services:
+        </p>
+        <a href="https://wa.me/254700000000" class="btn-hiw-teal" target="_blank" rel="noopener noreferrer">
+          Schedule A Pickup
+        </a>
+      </div>
+
+      <!-- Carousel -->
+      <div class="hiw-carousel-wrapper">
+        <div class="hiw-carousel" id="hiwCarousel">
+          <div class="hiw-carousel-track" id="hiwTrack">
+            <div class="hiw-slide">
+              <div class="hiw-glass-card">
+                <span class="step-badge">Step 1</span>
+                <p class="step-card-title">SCHEDULE A PICKUP</p>
+                <p class="step-card-desc">Seamless scheduling for your laundry pickup whenever you need it.</p>
+              </div>
+            </div>
+            <div class="hiw-slide">
+              <div class="hiw-glass-card">
+                <span class="step-badge">Step 2</span>
+                <p class="step-card-title">WE PICK UP YOUR LAUNDRY</p>
+                <p class="step-card-desc">Our team arrives at your location to collect your clothes safely.</p>
+              </div>
+            </div>
+            <div class="hiw-slide">
+              <div class="hiw-glass-card">
+                <span class="step-badge">Step 3</span>
+                <p class="step-card-title">EXPERT CLEANING &amp; CARE</p>
+                <p class="step-card-desc">We wash, dry, and fold your laundry with the highest quality standards.</p>
+              </div>
+            </div>
+            <div class="hiw-slide">
+              <div class="hiw-glass-card">
+                <span class="step-badge">Step 4</span>
+                <p class="step-card-title">DELIVERY TO YOUR DOORSTEP</p>
+                <p class="step-card-desc">Your fresh, clean clothes are delivered back to you—ready to wear!</p>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div class="hiw-steps-container">
-          <div class="hiw-step-card animate-in">
-            <span class="step-badge">Step 1</span>
-            <p class="step-card-title">SCHEDULE A PICKUP</p>
-            <p class="step-card-desc">Seamless scheduling for your laundry pickup whenever you need it.</p>
-          </div>
-          <div class="hiw-step-card animate-in" style="transition-delay: 0.1s">
-            <span class="step-badge">Step 2</span>
-            <p class="step-card-title">WE PICK UP YOUR LAUNDRY</p>
-            <p class="step-card-desc">Our team arrives at your location to collect your clothes safely.</p>
-          </div>
-          <div class="hiw-step-card animate-in" style="transition-delay: 0.2s">
-            <span class="step-badge">Step 3</span>
-            <p class="step-card-title">EXPERT CLEANING & CARE</p>
-            <p class="step-card-desc">We wash, dry, and fold your laundry with the highest quality standards.</p>
-          </div>
-          <div class="hiw-step-card animate-in" style="transition-delay: 0.3s">
-            <span class="step-badge">Step 4</span>
-            <p class="step-card-title">DELIVERY TO YOUR DOORSTEP</p>
-            <p class="step-card-desc">Your fresh, clean clothes are delivered back to you—ready to wear!</p>
-          </div>
+        <!-- Carousel indicators -->
+        <div class="hiw-carousel-dots" id="hiwDots">
+          <button class="hiw-dot active" data-index="0" aria-label="Step 1"></button>
+          <button class="hiw-dot" data-index="1" aria-label="Step 2"></button>
+          <button class="hiw-dot" data-index="2" aria-label="Step 3"></button>
+          <button class="hiw-dot" data-index="3" aria-label="Step 4"></button>
         </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- ════════════════════════════════════════════
        SECTION 4B — SPECIAL OFFER

@@ -155,4 +155,77 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 7. How-It-Works Carousel
+    const track = document.getElementById('hiwTrack');
+    const dotsContainer = document.getElementById('hiwDots');
+    if (track && dotsContainer) {
+        const slides = track.querySelectorAll('.hiw-slide');
+        const dots = dotsContainer.querySelectorAll('.hiw-dot');
+        const totalSlides = slides.length;
+        let currentIndex = 0;
+        let autoplayTimer;
+        const isMobile = () => window.innerWidth <= 768;
+        const slidesPerView = () => isMobile() ? 1 : 2;
+        const maxIndex = () => Math.max(0, totalSlides - slidesPerView());
+
+        function goToSlide(index) {
+            currentIndex = Math.min(index, maxIndex());
+            const offset = currentIndex * (100 / slidesPerView());
+            track.style.transform = `translateX(-${offset}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+        }
+
+        function nextSlide() {
+            goToSlide(currentIndex >= maxIndex() ? 0 : currentIndex + 1);
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayTimer = setInterval(nextSlide, 4000);
+        }
+
+        function stopAutoplay() {
+            clearInterval(autoplayTimer);
+        }
+
+        // Dot clicks
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                goToSlide(parseInt(dot.dataset.index));
+                startAutoplay();
+            });
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        track.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoplay();
+        }, { passive: true });
+        track.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex < maxIndex()) goToSlide(currentIndex + 1);
+                else if (diff < 0 && currentIndex > 0) goToSlide(currentIndex - 1);
+            }
+            startAutoplay();
+        }, { passive: true });
+
+        // Pause on hover
+        const carousel = document.getElementById('hiwCarousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', stopAutoplay);
+            carousel.addEventListener('mouseleave', startAutoplay);
+        }
+
+        // Recalculate on resize
+        window.addEventListener('resize', () => goToSlide(Math.min(currentIndex, maxIndex())));
+
+        // Start
+        goToSlide(0);
+        startAutoplay();
+    }
 });
