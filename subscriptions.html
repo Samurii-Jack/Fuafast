@@ -65,15 +65,21 @@
 
 
   <!-- SECTION 2: PREMIUM VALUE PROPOSITION & BENEFITS -->
-  <section class="premium-subscription-info" style="padding: 8rem 0 4rem; background: #ffffff;">
-    <div class="container">
-      <p style="text-align: center; color: #3e3434; font-family: 'Outfit', sans-serif; font-size: clamp(0.6rem, 2.5vw, 0.9rem); font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2.5rem; margin-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        SAVE TIME AND MONEY WITH A MONTHLY SUBSCRIPTION
-      </p>
+  <!-- SECTION 2: PREMIUM VALUE PROPOSITION & BENEFITS -->
+  <section class="premium-subscription-info" style="padding: 6rem 0 4rem; background: #ffffff; position: relative; overflow: hidden;">
+    
+    <!-- Hero Grid System from Homepage -->
+    <div class="hero-grid" style="min-height: auto; align-items: flex-start; gap: 0;">
       
-      <div class="premium-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-        <!-- Left Column: Copy & Benefits -->
-        <div class="premium-text-col animate-in">
+      <!-- Eyebrow Text spanning across the content area -->
+      <div style="grid-column: 2 / 4; margin-bottom: 2rem;">
+        <p style="color: #3e3434; font-family: 'Outfit', sans-serif; font-size: clamp(0.7rem, 2.5vw, 0.85rem); font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin: 0;">
+          SAVE TIME AND MONEY WITH A MONTHLY SUBSCRIPTION
+        </p>
+      </div>
+
+      <!-- Left Column: Copy & Benefits -->
+      <article class="premium-text-col animate-in" style="grid-column: 2 / 3; padding-right: 3.5rem;">
         <p style="font-family: 'Inter', sans-serif; font-size: 1.15rem; color: #4a5568; line-height: 1.7; margin-bottom: 2.5rem;">
           <strong style="color: #ff6b35; font-style: italic; font-size: 1.25rem;">We’re not psychics, but we know one thing to be true,</strong> 
           there will always be another pile of laundry waiting for you. 
@@ -82,23 +88,24 @@
         </p>
 
         <ol style="padding-left: 1.25rem; margin: 0; font-family: 'Inter', sans-serif; color: #4a5568; line-height: 1.8; font-size: 1.05rem;">
-          <li style="margin-bottom: 0.75rem; padding-left: 0.5rem;">
+          <li style="margin-bottom: 1.25rem; padding-left: 0.5rem;">
             <strong style="color: #1a1d2e;">All plans include priority scheduling,</strong> <em>which means your pickups always come first with guaranteed same-week pickup and delivery routing.</em>
           </li>
-          <li style="margin-bottom: 0.75rem; padding-left: 0.5rem;">
+          <li style="margin-bottom: 1.25rem; padding-left: 0.5rem;">
             <strong style="color: #1a1d2e;">All plans include zero delivery fees and rollover quota,</strong> <em>so you skip the standard delivery charges, and any unused kilos roll to the next month automatically.</em>
           </li>
           <li style="padding-left: 0.5rem;">
             <strong style="color: #1a1d2e;">Save up to 20%</strong> <em>over our a la carte pricing.</em>
           </li>
         </ol>
-      </div>
+      </article>
 
-      <!-- Right Column: Premium Image -->
-      <div class="premium-image-col animate-in" style="position: relative;">
-        <div style="position: absolute; top: -5%; left: 5%; width: 100%; height: 100%; background: linear-gradient(135deg, #f0f4ff, transparent); border-radius: 20px; z-index: 0;"></div>
-        <img src="assets/FUAFAST VAN.png" alt="FuaFast Delivery Van" style="position: relative; z-index: 1; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); object-fit: cover;" />
-      </div>
+      <!-- Right Column: Premium Image (Edge-to-Edge Pane) -->
+      <aside class="hero-bag-visual animate-in" style="grid-column: 3 / 5; align-self: stretch;">
+        <div class="hero-bag-frame" style="height: 100%; min-height: 480px; border-radius: 80px 0 0 80px;">
+          <img src="assets/FUAFAST VAN.png" alt="FuaFast Delivery Van" class="hero-bag-img" style="height: 100%; width: 100%; object-fit: cover; object-position: center;" />
+        </div>
+      </aside>
     </div>
   </section>
 
