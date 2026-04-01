@@ -228,4 +228,23 @@ document.addEventListener('DOMContentLoaded', () => {
         goToSlide(0);
         startAutoplay();
     }
+
+    // 8. Special Offer Popup Toast
+    const offerPopup = document.getElementById('offerPopup');
+    const offerClose = document.getElementById('offerPopupClose');
+    if (offerPopup && offerClose) {
+        const dismissed = sessionStorage.getItem('offerDismissed');
+        if (!dismissed) {
+            setTimeout(() => {
+                offerPopup.style.display = 'block';
+            }, 5000);
+        }
+        offerClose.addEventListener('click', () => {
+            offerPopup.classList.add('hiding');
+            setTimeout(() => {
+                offerPopup.style.display = 'none';
+            }, 350);
+            sessionStorage.setItem('offerDismissed', 'true');
+        });
+    }
 });
