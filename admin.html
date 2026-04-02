@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    // Simple MVP Admin Authentication
+    // NOTE: This is client-side protection. For v2, migrate to Firebase Auth.
+    const ADMIN_PASSWORD = 'fuafast-admin-2024'; // The user can change this later
+    
+    // Check if they already logged in during this session
+    if (sessionStorage.getItem('fua_admin_auth') !== 'true') {
+      const enteredPassword = prompt('🔒 Enter Admin Password to access FuaFast Dashboard:');
+      
+      if (enteredPassword === ADMIN_PASSWORD) {
+        // Correct password: save to session so it doesn't ask on every refresh
+        sessionStorage.setItem('fua_admin_auth', 'true');
+      } else {
+        // Wrong password: kick them to the home page
+        alert('❌ Access Denied.');
+        window.location.href = 'index.html';
+      }
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FuaFast Admin Dashboard</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 20px; background: #f4f7f6; }
+    .container { max-width: 1400px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    h1 { color: #4163ff; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+    th { background-color: #4163ff; color: white; }
+    tr:hover { background-color: #f1f1f1; }
+    
+    /* Interactive Elements */
+    .qty-input { width: 60px; padding: 6px; border-radius: 4px; border: 1px solid #ccc; text-align: center; font-weight: bold; }
+    .status-select { padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-weight: bold; cursor: pointer; min-width: 120px; }
+    
+    /* Order Status Colors */
+    .status-requested { background-color: #ffeaa7; color: #d35400; }
+    .status-pickedUp { background-color: #81ecec; color: #008080; }
+    .status-washing { background-color: #a29bfe; color: #4834d4; }
+    .status-delivered { background-color: #55efc4; color: #00b894; }
+    
+    /* Subscription Status Colors */
+    .sub-pending_payment { background-color: #ffcccc; color: #c0392b; }
+    .sub-active { background-color: #55efc4; color: #00b894; }
+    
+    .wa-btn { background-color: #25D366; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .wa-btn:hover { background-color: #128C7E; transform: translateY(-1px); }
+    .action-btn { background-color: #4163ff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    
+    small { color: #666; display: block; margin-top: 4px; }
+    .amount-cell { font-family: monospace; font-weight: bold; font-size: 1.1em; color: #2d3436; }
+    hr { margin: 50px 0; border: 0; border-top: 2px dashed #cbd5e0; }
+    .quota-info { font-weight: 800; color: #1a202c; font-size: 1.1em; }
+    
+    /* Settings Styles */
+    .settings-card { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-end; }
+    .settings-group { flex: 1; }
+    .settings-group label { display: block; font-size: 13px; font-weight: bold; color: #666; margin-bottom: 8px; }
+    .settings-input { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ORDERS SECTION -->
+    <h1>
+      <span> FuaFast Live Orders</span>
+      <span style="font-size: 14px; font-weight: normal; color: #666;">Real-time Dashboard & Billing</span>
+    </h1>
+
+    <!-- SETTINGS SECTION -->
+    <div class="settings-card">
+      <div class="settings-group">
+        <label>Preferred Pickup Days</label>
+        <input type="text" id="setDays" class="settings-input" placeholder="e.g. Tuesdays & Fridays">
+      </div>
+      <div class="settings-group">
+        <label>Startup Time</label>
+        <input type="text" id="setTime" class="settings-input" placeholder="e.g. 10:00 AM">
+      </div>
+      <button onclick="saveScheduleSettings()" class="action-btn" style="height: 40px;">💾 Save Schedule</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date / Time</th>
+          <th>Customer</th>
+          <th>Service</th>
+          <th>Qty (Kg/Pr)</th>
+          <th>Amount (KSh)</th>
+          <th>Status Update</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="orders-table-body">
+        <tr><td colspan="7">Loading orders...</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <!-- SUBSCRIPTIONS SECTION -->
+    <h1>
+      <span> Active Subscriptions</span>
+      <span style="font-size: 14px; font-weight: normal; color: #666;">Manage Quotas & Payments</span>
+    </h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Date Joined</th>
+          <th>Subscriber</th>
+          <th>Plan Details</th>
+          <th>Kilos Remaining</th>
+          <th>Pick-up Day</th>
+          <th>Payment Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="subs-table-body">
+        <tr><td colspan="7">Loading subscriptions...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    /* ------------------------------
+       ORDERS LOGIC (from Phase 2)
+       ------------------------------ */
+    db.collection('orders').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+      const tbody = document.getElementById('orders-table-body');
+      
+      if(snapshot.empty && tbody.innerHTML.includes('Loading')) { 
+        tbody.innerHTML = '<tr><td colspan="7">No orders yet.</td></tr>'; 
+        return; 
+      } else if (tbody.innerHTML.includes('Loading')) {
+        tbody.innerHTML = '';
+      }
+
+      snapshot.docChanges().forEach((change) => {
+        const order = change.doc.data();
+        const orderId = change.doc.id;
+        const date = order.pickupDate ? new Date(order.pickupDate).toLocaleDateString() : 'N/A';
+        const time = order.pickupTime || '';
+        const currentStatus = order.status || 'requested';
+        const qty = order.kgs || order.qty || '';
+        const amount = order.amount || 0;
+        
+        const rowHTML = `
+          <td style="white-space: nowrap;">${date}<br><small>@ ${time || 'N/A'}</small></td>
+          <td>
+            <strong>${order.name || 'N/A'}</strong>
+            <small>${order.phoneNumber || ''}</small>
+            <small>${order.address || ''}</small>
+          </td>
+          <td>${order.serviceType || 'N/A'}</td>
+          <td>
+            <input type="number" step="any" min="0" value="${qty}" 
+                   onchange="updateOrderQty('${orderId}', '${(order.serviceType || '').replace(/'/g, "\\'")}', this.value)" 
+                   class="qty-input" id="qty-${orderId}">
+          </td>
+          <td class="amount-cell">
+            ${amount > 0 ? 'KSh ' + amount.toLocaleString() : '-'}
+          </td>
+          <td>
+            <select onchange="updateDoc('orders', '${orderId}', 'status', this.value)" 
+                    class="status-select status-${currentStatus}" id="status-${orderId}">
+              <option value="requested" ${currentStatus === 'requested' ? 'selected' : ''}>Requested</option>
+              <option value="pickedUp" ${currentStatus === 'pickedUp' ? 'selected' : ''}>Picked Up</option>
+              <option value="washing" ${currentStatus === 'washing' ? 'selected' : ''}>Washing</option>
+              <option value="delivered" ${currentStatus === 'delivered' ? 'selected' : ''}>Delivered</option>
+            </select>
+          </td>
+          <td>
+            <button onclick="sendOrderWhatsApp('${order.phoneNumber}', '${order.name}', '${currentStatus}', '${order.pickupDate}', '${time}', ${amount}, ${qty || 0})" 
+                    class="wa-btn">
+              💬 Notify
+            </button>
+          </td>
+        `;
+
+        let tr = document.getElementById(`order-row-${orderId}`);
+        
+        if (change.type === 'added') {
+          if (!tr) {
+            tr = document.createElement('tr');
+            tr.id = `order-row-${orderId}`;
+            tr.innerHTML = rowHTML;
+            // Append ensures orders stay inside the table, though strictly ordering requires insertBefore. 
+            // For MVP dashboard, append is perfectly functional as updates mostly happen to existing entries.
+            tbody.appendChild(tr);
+          }
+        } else if (change.type === 'modified') {
+          if (tr) {
+            const activeId = document.activeElement ? document.activeElement.id : null;
+            // Only overwrite HTML if the user isn't actively interacting with this specific row's inputs
+            if (activeId !== `qty-${orderId}` && activeId !== `status-${orderId}`) {
+              tr.innerHTML = rowHTML;
+            }
+          }
+        } else if (change.type === 'removed') {
+          if (tr) tr.remove();
+        }
+      });
+    });
+
+    /* ------------------------------
+       SUBSCRIPTIONS LOGIC (Phase 3)
+       ------------------------------ */
+    db.collection('subscriptions').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+      const tbody = document.getElementById('subs-table-body');
+      
+      if(snapshot.empty && tbody.innerHTML.includes('Loading')) { 
+        tbody.innerHTML = '<tr><td colspan="7">No subscriptions yet.</td></tr>'; 
+        return; 
+      } else if (tbody.innerHTML.includes('Loading')) {
+        tbody.innerHTML = '';
+      }
+
+      snapshot.docChanges().forEach((change) => {
+        const sub = change.doc.data();
+        const docId = change.doc.id;
+        const date = sub.createdAt ? sub.createdAt.toDate().toLocaleDateString() : 'N/A';
+        const status = sub.status || 'pending_payment';
+        
+        const rowHTML = `
+          <td>${date}</td>
+          <td>
+            <strong>${sub.name || 'N/A'}</strong>
+            <small>${sub.phoneNumber || ''}</small>
+          </td>
+          <td>
+            <strong>${sub.planName || 'N/A'}</strong>
+            <small>Price: KSh ${sub.monthlyPrice?.toLocaleString() || '0'}</small>
+          </td>
+          <td class="quota-info">
+            ${sub.kilosRemaining} / ${sub.kilosPerMonth} kg
+          </td>
+          <td>
+            <input type="text" placeholder="e.g. Tuesday" value="${sub.preferredDay || ''}" 
+                   onchange="updateDoc('subscriptions', '${docId}', 'preferredDay', this.value)" 
+                   style="width: 100px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;"
+                   id="sub-day-${docId}">
+          </td>
+          <td>
+            <select onchange="updateDoc('subscriptions', '${docId}', 'status', this.value)" 
+                    class="status-select sub-${status}" id="sub-status-${docId}">
+              <option value="pending_payment" ${status === 'pending_payment' ? 'selected' : ''}>Pending Payment</option>
+              <option value="active" ${status === 'active' ? 'selected' : ''}>Active (Paid)</option>
+            </select>
+          </td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="handleDeductKilos('${docId}', '${sub.name}', '${sub.phoneNumber}', ${sub.kilosRemaining})" 
+                      class="action-btn">⚖️ Deduct</button>
+              <button onclick="triggerSubReminder('${sub.phoneNumber}', '${sub.name}', ${sub.kilosRemaining}, '${sub.preferredDay || ''}')" 
+                      class="wa-btn">💬 Notify</button>
+            </div>
+          </td>
+        `;
+
+        let tr = document.getElementById(`sub-row-${docId}`);
+        
+        if (change.type === 'added') {
+          if (!tr) {
+            tr = document.createElement('tr');
+            tr.id = `sub-row-${docId}`;
+            tr.innerHTML = rowHTML;
+            tbody.appendChild(tr);
+          }
+        } else if (change.type === 'modified') {
+          if (tr) {
+            const activeId = document.activeElement ? document.activeElement.id : null;
+            if (activeId !== `sub-day-${docId}` && activeId !== `sub-status-${docId}`) {
+              tr.innerHTML = rowHTML;
+            }
+          }
+        } else if (change.type === 'removed') {
+          if (tr) tr.remove();
+        }
+      });
+    });
+
+
+    /* ------------------------------
+       SHARED UTILITIES & ACTIONS
+       ------------------------------ */
+    
+    // Generic Update Function
+    window.updateDoc = async function(collection, docId, field, newValue) {
+      try {
+        await db.collection(collection).doc(docId).update({
+          [field]: newValue,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (error) {
+        console.error("Error updating doc:", error);
+        alert("Failed to update.");
+      }
+    };
+
+    // Calculate Price for Orders
+    window.updateOrderQty = async function(orderId, serviceType, newQty) {
+      const qty = parseFloat(newQty) || 0;
+      let amount = 0;
+      const typeStr = (serviceType || '').toLowerCase();
+      
+      if (typeStr.includes('wash')) amount = Math.max(6, qty) * 115;
+      else if (typeStr.includes('express')) amount = Math.max(6, qty) * 165;
+      else if (typeStr.includes('sneaker')) amount = qty * 240;
+      else amount = Math.max(6, qty) * 115; // default fallback
+
+      try {
+        await db.collection('orders').doc(orderId).update({
+          kgs: qty,
+          amount: amount,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (error) {
+        console.error("Error updating qty:", error);
+      }
+    };
+
+    // Deduct Subscription Kilos & Notify
+    window.handleDeductKilos = async function(subId, name, phone, currentRemaining) {
+      const kilosUsed = prompt(`How many kilos did ${name} use today?`);
+      if (!kilosUsed || isNaN(kilosUsed)) return;
+      
+      const newTotal = currentRemaining - parseFloat(kilosUsed);
+      if(newTotal < 0) alert("Warning: This exceeds their monthly limit!");
+      
+      try {
+        await db.collection('subscriptions').doc(subId).update({
+          kilosRemaining: newTotal,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // Notify Subscriber
+        const cleanPhone = phone.replace(/[^0-9]/g, '').startsWith('0') ? '254' + phone.replace(/[^0-9]/g, '').substring(1) : phone.replace(/[^0-9]/g, '');
+        const message = encodeURIComponent(`Hi ${name}! We've processed ${kilosUsed}kg of your laundry today. \n\nYour remaining balance for this month is: ${newTotal}kg. \n\nThank you for being a FuaFast subscriber! \n\n*Tulia, Tutakufulia* ✨`);
+        window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
+        
+      } catch (error) {
+        console.error("Error deducting kilos:", error);
+      }
+    };
+
+    // --- PICKUP SCHEDULE SETTINGS LOGIC ---
+    let globalSchedule = { days: "Mondays & Thursdays", time: "10:00 AM" };
+
+    async function loadScheduleSettings() {
+      try {
+        const doc = await db.collection('settings').doc('pickup').get();
+        if (doc.exists) {
+          globalSchedule = doc.data();
+          document.getElementById('setDays').value = globalSchedule.days || "";
+          document.getElementById('setTime').value = globalSchedule.time || "";
+        }
+      } catch (error) { console.error("Error loading settings:", error); }
+    }
+    loadScheduleSettings();
+
+    window.saveScheduleSettings = async function() {
+      const days = document.getElementById('setDays').value;
+      const time = document.getElementById('setTime').value;
+      try {
+        await db.collection('settings').doc('pickup').set({ days, time });
+        globalSchedule = { days, time };
+        alert("Schedule settings saved successfully! ✅");
+      } catch (error) { 
+        console.error("Error saving settings:", error);
+        alert("Failed to save settings.");
+      }
+    };
+
+    window.triggerSubReminder = function(phone, name, remaining, preferredDay) {
+      const days = preferredDay || globalSchedule.days;
+      const time = preferredDay ? "" : globalSchedule.time; 
+      sendSubscriptionReminder(phone, name, remaining, days, time);
+    };
+
+    // Subscription Weekly Reminder (Dynamics included)
+    window.sendSubscriptionReminder = function(phone, name, remaining, days, time) {
+      if(!phone) return;
+      let cleanPhone = phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.startsWith('0')) cleanPhone = '254' + cleanPhone.substring(1);
+      
+      let scheduleText = "";
+      if (days && time) {
+        scheduleText = ` Our pickup team will be in your area this ${days} starting from ${time}.`;
+      } else if (days) {
+        scheduleText = ` Just a reminder about your preferred pickup on ${days}.`;
+      }
+      
+      const message = encodeURIComponent(`Hi ${name}! This is your weekly FuaFast reminder.${scheduleText} \n\nYour current laundry balance is: ${remaining}kg. \n\nDon't forget that you have a free express upgrade available this quarter! \n\n*Tulia, Tutakufulia* 🧺✨`);
+      window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
+    };
+
+    // Notify for Regular Orders (Phase 2 logic)
+    window.sendOrderWhatsApp = function(phone, name, status, date, time, amount, qty) {
+      if(!phone) return;
+      let cleanPhone = phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.startsWith('0')) cleanPhone = '254' + cleanPhone.substring(1);
+      
+      let deliveryInfo = "";
+      if (date && time) {
+        const pickupDateTime = new Date(`${date}T${time}`);
+        if (!isNaN(pickupDateTime)) {
+          const deliveryDateTime = new Date(pickupDateTime.getTime() + (24 * 60 * 60 * 1000));
+          deliveryInfo = `\n- Expected Delivery: ${deliveryDateTime.toLocaleDateString()} @ ${deliveryDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        }
+      }
+
+      let message = `Hi ${name || 'there'}, `;
+      let details = `\n\nOrder Info:\n- Pickup: ${date} @ ${time}${deliveryInfo}`;
+      if (qty > 0) details += `\n- Quantity: ${qty} Kgs/Pr`;
+      if (amount > 0) details += `\n- Bill: KSh ${amount.toLocaleString()}`;
+      
+      if(status === 'requested') message += "we received your laundry request! We'll contact you shortly. 🧺";
+      else if (status === 'pickedUp') message += "your laundry is picked up and on its way to us! 🚚";
+      else if (status === 'washing') message += "your clothes are currently being washed! 🫧";
+      else if (status === 'delivered') message += "your laundry has been delivered! ✨";
+
+      const finalMsg = `${message + details}\n\n*Tulia, Tutakufulia*`;
+      window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(finalMsg)}`, '_blank');
+    };
+  </script>
+</body>
+</html>

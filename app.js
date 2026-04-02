@@ -92,9 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle WhatsApp clicks globally
-    const waPhone = "254700000000";
+    const waPhone = "254739802437";
     document.querySelectorAll('[data-wa-msg]').forEach(btn => {
         btn.addEventListener('click', (e) => {
+            // IF MODAL EXISTS ON PAGE, LET IT HANDLE THE CLICK
+            if (document.getElementById('bookingModal')) return;
+
             // Prevent default if it's an anchor without a true href
             if (btn.tagName === 'A' && (!btn.href || btn.href.includes('#'))) {
                 e.preventDefault();
