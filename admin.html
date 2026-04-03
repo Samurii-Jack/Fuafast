@@ -49,6 +49,8 @@
     .wa-btn { background-color: #25D366; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .wa-btn:hover { background-color: #128C7E; transform: translateY(-1px); }
     .action-btn { background-color: #4163ff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .delete-btn { background-color: #ff4757; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .delete-btn:hover { background-color: #ff6b81; transform: translateY(-1px); }
     
     small { color: #666; display: block; margin-top: 4px; }
     .amount-cell { font-family: monospace; font-weight: bold; font-size: 1.1em; color: #2d3436; }
@@ -178,10 +180,15 @@
             </select>
           </td>
           <td>
-            <button onclick="sendOrderWhatsApp('${order.phoneNumber}', '${order.name}', '${currentStatus}', '${order.pickupDate}', '${time}', ${amount}, ${qty || 0})" 
-                    class="wa-btn">
-              💬 Notify
-            </button>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="sendOrderWhatsApp('${order.phoneNumber}', '${order.name}', '${currentStatus}', '${order.pickupDate}', '${time}', ${amount}, ${qty || 0})" 
+                      class="wa-btn">
+                💬 Notify
+              </button>
+              <button onclick="confirmDeleteDoc('orders', '${orderId}')" class="delete-btn">
+                🗑️ Delete
+              </button>
+            </div>
           </td>
         `;
 
@@ -261,6 +268,7 @@
                       class="action-btn">⚖️ Deduct</button>
               <button onclick="triggerSubReminder('${sub.phoneNumber}', '${sub.name}', ${sub.kilosRemaining}, '${sub.preferredDay || ''}')" 
                       class="wa-btn">💬 Notify</button>
+              <button onclick="confirmDeleteDoc('subscriptions', '${docId}')" class="delete-btn">🗑️ Delete</button>
             </div>
           </td>
         `;
@@ -292,6 +300,18 @@
        SHARED UTILITIES & ACTIONS
        ------------------------------ */
     
+    // Generic Delete Function
+    window.confirmDeleteDoc = async function(collection, docId) {
+      if (confirm('Are you sure you want to permanently delete this item?')) {
+        try {
+          await db.collection(collection).doc(docId).delete();
+        } catch (error) {
+          console.error("Error deleting doc:", error);
+          alert("Failed to delete.");
+        }
+      }
+    };
+
     // Generic Update Function
     window.updateDoc = async function(collection, docId, field, newValue) {
       try {
