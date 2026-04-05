@@ -196,7 +196,7 @@
           </td>
           <td>
             <div style="display: flex; gap: 8px;">
-              <button onclick="sendOrderWhatsApp('${order.phoneNumber}', '${order.name}', '${currentStatus}', '${order.pickupDate}', '${time}', ${amount}, ${qty || 0})" 
+              <button onclick="sendOrderWhatsApp('${orderId}', '${order.phoneNumber}', '${order.name}', '${currentStatus}', '${order.pickupDate}', '${time}', ${amount}, ${qty || 0})" 
                       class="wa-btn">
                 💬 Notify
               </button>
@@ -438,11 +438,14 @@
     };
 
     // Notify for Regular Orders (Phase 2 logic)
-    window.sendOrderWhatsApp = function(phone, name, status, date, time, amount, qty) {
+    window.sendOrderWhatsApp = function(orderId, phone, name, savedStatus, date, time, amount, qty) {
       if(!phone) return;
       let cleanPhone = phone.replace(/[^0-9]/g, '');
       if (cleanPhone.startsWith('0')) cleanPhone = '254' + cleanPhone.substring(1);
       
+      const statusElement = document.getElementById(`status-${orderId}`);
+      const status = statusElement ? statusElement.value : savedStatus;
+
       let deliveryInfo = "";
       if (date && time) {
         const pickupDateTime = new Date(`${date}T${time}`);
@@ -453,16 +456,34 @@
       }
 
       let message = `Hi ${name || 'there'}, `;
-      let details = `\n\nOrder Info:\n- Pickup: ${date} @ ${time}${deliveryInfo}`;
-      if (qty > 0) details += `\n- Quantity: ${qty} Kgs/Pr`;
-      if (amount > 0) details += `\n- Bill: KSh ${amount.toLocaleString()}`;
+      let details = "";
       
-      if(status === 'requested') message += "we received your laundry request! We'll contact you shortly. 🧺";
-      else if (status === 'pickedUp') message += "your laundry is picked up and on its way to us! 🚚";
-      else if (status === 'washing') message += "your clothes are currently being washed! 🫧";
-      else if (status === 'delivered') message += "your laundry has been delivered! ✨";
+      if(status === 'requested') {
+        message += "we received your laundry request! We'll contact you shortly to confirm. 🧺";
+        details = `\n\nRequest Info:\n- Requested Pickup: ${date} @ ${time}`;
+      }
+      else if (status === 'pickedUp') {
+        message += "your laundry has been successfully picked up and is on its way to us! 🚚";
+        details = `\n\nOrder Details:`;
+        if (qty > 0) details += `\n- Quantity Received: ${qty} Kgs/Pr`;
+        if (amount > 0) details += `\n- Estimated Bill: KSh ${amount.toLocaleString()}`;
+        details += deliveryInfo;
+      }
+      else if (status === 'washing') {
+        message += "your clothes are currently being processed in our lab! 🫧";
+        details = `\n\nOrder Details:`;
+        if (qty > 0) details += `\n- Quantity: ${qty} Kgs/Pr`;
+        if (amount > 0) details += `\n- Final Bill: KSh ${amount.toLocaleString()}`;
+        details += deliveryInfo;
+      }
+      else if (status === 'delivered') {
+        message += "your laundry has been delivered! We hope you love the freshness. ✨";
+        details = `\n\nOrder Summary:`;
+        if (qty > 0) details += `\n- Serviced: ${qty} Kgs/Pr`;
+        if (amount > 0) details += `\n- Total Paid: KSh ${amount.toLocaleString()}`;
+      }
 
-      const finalMsg = `${message + details}\n\n*Tulia, Tutakufulia*`;
+      const finalMsg = `${message}${details}\n\n*Tulia, Tutakufulia*`;
       window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(finalMsg)}`, '_blank');
     };
   </script>
